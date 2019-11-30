@@ -23,5 +23,15 @@ class TestMain20191129 {
         //继承父类方法 or 实现接口都是通过 : 来操作的
         //比如 class a : A{}
 
+        //嵌套类
+        //类可以嵌套在其他类中
+        //例如
+        TestMain20191129.test().getMessage()
+
+        
+
     }
+    class test{
+            fun getMessage() = 2
+        }
 }
