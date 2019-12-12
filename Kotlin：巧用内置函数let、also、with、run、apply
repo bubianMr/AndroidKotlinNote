@@ -1,0 +1,112 @@
+1、let函数
+	1.1、使用it替代object对象去访问其共有的属性&方法
+		object.let{
+			it.todo()
+		}
+
+	1.2、判断object为null的操作
+		object?.let{
+			it.todo()
+		}
+
+	1.3、使用示例
+		//使用kotlin无let函数
+		mVar?.method()
+		mVar?.method1()
+		mVar?.method2()
+
+		//使用kotlin的let函数
+		mVar?.let{
+			method()
+			method1()
+			method2()
+		}
+
+2、also函数
+	2.1、作用&应用场景
+		类似于let函数，但区别在于返回值：
+		let函数：返回值 = 最后一行/return的表达式
+		also函数：返回值=传入的对象的本身
+
+	2.2、使用示例
+		//let函数
+		var result = mVar.let{
+			it.method()
+			it.method1()
+			it.method2()
+			123
+		}
+		//最终结果 = 返回的123赋值给result
+
+		//also函数
+		var result = mVar.also{
+			it.method()
+			it.method1()
+			it.method2()
+			123
+		}
+		//最终结果 = 返回一个mVar对象给变量result
+
+
+3、with函数
+	3.1、作用
+	调用同一个对象的多个方法/属性时，可以省去对象名重复，直接调用方法名/属性即可
+
+	3.2、应用场景
+	需要调用同一个对象的多个方法/属性
+
+	3.3、使用方法
+	with(object){
+		//...
+	}
+	//返回值=函数块的最后一行/return表达式
+
+	3.4、使用示例
+	//此处要调用people的name和age属性
+	val people = People("carson",20)
+	with(people){
+		pritln("my name is $name,I am $age years old")
+	}
+
+4、run函数
+	4.1、作用&应用场景
+	结合了let、with两个函数的作用，即：
+		1、调用同一个对象的多个方法/属性时，可以省去对象名重复，直接调用方法名/属性即可
+		2、定义一个变量在特定作用域内
+		3、统一做判空处理
+
+	4.2、使用方法
+		object.run{
+			//......
+		}
+		//返回值 = 函数块的最后一行 / return表达式
+
+	4.3、使用示例
+		//此处要调用people的name和age属性，且要判空
+		val people = People("carson",10)
+		people?.run{
+			println("my name is $name,I am $age years old")
+		} 
+
+5、apply函数
+	5.1、作用&应用场景
+		与run函数类似，但是区别在于返回值
+			a、run函数返回最后一行的值/表达式
+			b、apply函数返回传入的对象的本身
+
+	5.2、应用场景
+		对象实例初始化时需要对对象中的属性进行赋值&返回该对象
+
+	5.3、使用示例
+	data class People(
+    	var name: String,
+    	var age: Int
+	)
+
+	var p = People("不变",23)
+    val apply = p.apply {
+        age = 32
+        name= "呵呵"
+    }
+    LogUtil.e("age = ${apply.age}")
+    //最后输出的结果是 age = 32
